@@ -11,13 +11,7 @@ locale                   : "en-US"
 title                    : "Personal Website"
 title_separator          : "-"
 name                     : &Sanskar Pandit "Sanskar Pandit"
-description              : &An information security analyst at American Express, specializing in IAM and cloud solutions. I work on Leading the management of SailPoint IdentityIQ, effectively managing IAM processes to ensure secure access controls within the organization.
-
-Holding a bachelors degree in Computer applications from JIMS rohini, I’m driven by data-driven insights to solve complex challenges.
-
-Currently enhancing my skill set in areas including networking, information security, and blockchain cloud technology.
-
-Let’s connect! "personal description"
+description              : &An information security analyst at American Express, specializing in IAM and cloud solutions. Let’s connect! "personal description"
 url                      : https://skar-ISA.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "academicpages/academicpages.github.io"
