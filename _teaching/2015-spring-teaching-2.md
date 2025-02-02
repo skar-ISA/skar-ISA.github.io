@@ -4,7 +4,7 @@ collection: teaching
 type: "Master's Degree"
 permalink: /teaching/2015-spring-teaching-1
 venue: "MNU, Computer Science"
-date: Presently
+date: 01-07-2024
 location: "Faridabad, India"
 ---
 
