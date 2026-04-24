@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="description" content="Sanskar Pandit — Cybersecurity Researcher, Cloud Engineer & Educator"/>
+<title>Sanskar Pandit — Researcher & Educator</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ─────────────── RESET & TOKENS ─────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+:root{
+  --bg:#09090f;--bg2:#0e0f18;--bg3:#13141f;--surface:#181926;
+  --border:#21243a;--accent:#5b8def;--accent2:#8b5cf6;
+  --teal:#2dd4bf;--amber:#f59e0b;--red:#ef4444;
+  --text:#dde3f0;--muted:#7b84a0;--dim:#3d4260;
+  --font:'Sora',system-ui,sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:8px;--r2:12px;
+  --nav-h:64px;
+  --container:1100px;
+  --gap:clamp(1rem,4vw,3rem);
+}
+
+/* ─────────────── SCROLLBAR ─────────────── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ─────────────── PROGRESS ─────────────── */
+#bar{position:fixed;top:0;left:0;height:2px;background:var(--accent);z-index:300;width:0%;transition:width .08s linear;pointer-events:none}
+
+/* ─────────────── NAV ─────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1.25rem,5vw,3rem);
+  background:rgba(9,9,15,0.88);backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom:1px solid var(--border);
+}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.av{
+  width:34px;height:34px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;font-family:var(--mono);letter-spacing:0.02em;
+}
+.brand-text .name{font-size:13px;font-weight:600;color:var(--text);line-height:1.2}
+.brand-text .status{font-size:10px;color:var(--teal);font-family:var(--mono);display:flex;align-items:center;gap:5px;margin-top:1px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--teal);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+.nav-links{display:flex;gap:1.75rem;list-style:none}
+.nav-links a{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+
+/* hamburger */
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;border:none;background:none}
+.ham span{display:block;width:22px;height:1.5px;background:var(--muted);transition:all .3s}
+.ham.open span:nth-child(1){transform:rotate(45deg) translate(4.5px,4.5px)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:rotate(-45deg) translate(4.5px,-4.5px)}
+
+.mob-menu{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:190;
+  background:rgba(9,9,15,0.98);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);padding:1.5rem;
+  flex-direction:column;gap:0;
+}
+.mob-menu.open{display:flex}
+.mob-menu a{
+  font-size:14px;color:var(--muted);text-decoration:none;
+  padding:.75rem 0;border-bottom:1px solid var(--border);
+  transition:color .2s;
+}
+.mob-menu a:last-child{border-bottom:none}
+.mob-menu a:hover{color:var(--text)}
+
+/* ─────────────── LAYOUT ─────────────── */
+.container{max-width:var(--container);margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem)}
+section{padding:clamp(4rem,8vw,6rem) 0}
+
+/* ─────────────── SECTION LABELS ─────────────── */
+.eyebrow{
+  font-family:var(--mono);font-size:10px;color:var(--accent);
+  letter-spacing:.16em;text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;margin-bottom:.6rem;
+}
+.eyebrow::before{content:'//';color:var(--dim)}
+h2.title{
+  font-size:clamp(1.9rem,4.5vw,2.8rem);font-weight:700;
+  letter-spacing:-.025em;line-height:1.1;color:var(--text);
+  margin-bottom:clamp(2rem,4vw,3rem);
+}
+
+/* ─────────────── HERO ─────────────── */
+#hero{
+  min-height:100svh;display:flex;align-items:center;
+  padding-top:var(--nav-h);position:relative;overflow:hidden;
+}
+.grid-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:56px 56px;opacity:.18;
+  mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,black 20%,transparent 100%);
+}
+.glow{
+  position:absolute;pointer-events:none;border-radius:50%;
+  filter:blur(80px);
+}
+.glow1{width:500px;height:500px;top:10%;left:-5%;background:rgba(91,141,239,.06)}
+.glow2{width:400px;height:400px;top:40%;right:-5%;background:rgba(139,92,246,.05)}
+
+.hero-inner{
+  position:relative;z-index:1;display:grid;
+  grid-template-columns:1fr auto;gap:3rem;align-items:center;
+  width:100%;
+}
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:10px;color:var(--accent);
+  border:1px solid rgba(91,141,239,.35);border-radius:999px;
+  padding:.35rem .95rem;margin-bottom:1.5rem;
+}
+.tag-dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+h1.hero-name{
+  font-size:clamp(3rem,8vw,6.5rem);font-weight:700;
+  letter-spacing:-.04em;line-height:.95;margin-bottom:1.5rem;color:var(--text);
+}
+h1.hero-name .fade{color:var(--dim)}
+h1.hero-name .grad{
+  background:linear-gradient(135deg,var(--accent),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  font-size:clamp(.92rem,1.8vw,1.05rem);color:var(--muted);
+  max-width:50ch;line-height:1.8;margin-bottom:2.5rem;
+}
+.hero-desc strong{color:var(--text);font-weight:600}
+.btns{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:.7rem 1.5rem;font-size:12px;font-weight:600;
+  letter-spacing:.06em;text-decoration:none;cursor:pointer;
+  font-family:var(--font);border:none;transition:all .2s;
+}
+.btn-fill{
+  background:var(--accent);color:#fff;
+  clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));
+}
+.btn-fill:hover{background:#6f9ff5;transform:translateY(-1px)}
+.btn-outline{
+  border:1px solid var(--border);color:var(--muted);background:transparent;
+}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.hero-stats{display:flex;gap:2rem;flex-wrap:wrap}
+.stat .n{font-size:2.2rem;font-weight:700;color:var(--text);line-height:1;letter-spacing:-.04em}
+.stat .n em{font-style:normal;font-size:1.1rem;color:var(--accent)}
+.stat .l{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:.06em;margin-top:4px}
+
+/* avatar right side */
+.hero-avatar-wrap{flex-shrink:0}
+.avatar-ring{
+  width:clamp(160px,20vw,240px);height:clamp(160px,20vw,240px);
+  border-radius:50%;
+  background:conic-gradient(from 180deg,var(--accent),var(--accent2),var(--teal),var(--accent));
+  padding:2px;animation:spin 8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.avatar-inner{
+  width:100%;height:100%;border-radius:50%;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;color:var(--accent);letter-spacing:-.04em;
+}
+
+/* ─────────────── ABOUT / RESEARCH ─────────────── */
+#about{background:var(--bg2)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);align-items:start}
+.about-text{color:var(--muted);font-size:clamp(.88rem,1.5vw,.98rem);line-height:1.85}
+.about-text p+p{margin-top:1.1rem}
+.about-text strong{color:var(--text);font-weight:600}
+.pub-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);
+  padding:1.25rem 1.5rem;margin-top:1.5rem;
+  display:flex;gap:12px;align-items:flex-start;
+  transition:border-color .2s;
+}
+.pub-card:hover{border-color:var(--accent)}
+.pub-icon{
+  width:36px;height:36px;flex-shrink:0;border-radius:var(--r);
+  background:rgba(91,141,239,.12);display:flex;align-items:center;justify-content:center;
+}
+.pub-icon svg{width:18px;height:18px;fill:var(--accent)}
+.pub-label{font-size:10px;font-family:var(--mono);color:var(--accent);letter-spacing:.08em;margin-bottom:4px}
+.pub-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:4px}
+.pub-meta{font-size:11px;color:var(--dim)}
+
+.r-cards{display:flex;flex-direction:column;gap:.75rem}
+.r-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:1rem 1.25rem;display:flex;gap:12px;align-items:flex-start;
+  position:relative;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;
+}
+.r-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform .25s;
+}
+.r-card:hover{border-color:rgba(91,141,239,.4);transform:translateX(3px)}
+.r-card:hover::before{transform:scaleY(1)}
+.r-icon{width:28px;height:28px;flex-shrink:0;border-radius:6px;background:rgba(91,141,239,.1);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.r-icon svg{width:14px;height:14px;fill:var(--accent)}
+.r-card h3{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.r-card p{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* ─────────────── EXPERIENCE ─────────────── */
+.exp-wrap{display:grid;grid-template-columns:220px 1fr;gap:var(--gap);align-items:start}
+.tl-nav{position:sticky;top:calc(var(--nav-h) + 1.5rem)}
+.tl-item{
+  padding:.65rem 1rem;cursor:pointer;border-left:2px solid var(--border);
+  margin-bottom:.35rem;transition:border-color .2s;
+}
+.tl-item.act{border-left-color:var(--accent)}
+.tl-item:hover{border-left-color:var(--muted)}
+.tl-title{font-size:12px;font-weight:600;color:var(--muted);transition:color .2s;line-height:1.3}
+.tl-item.act .tl-title{color:var(--text)}
+.tl-org{font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:2px}
+.tl-date{font-size:10px;color:var(--dim);font-family:var(--mono);margin-top:1px}
+
+.panel{display:none}
+.panel.act{display:block}
+.exp-role{font-size:clamp(1.1rem,2.5vw,1.4rem);font-weight:700;color:var(--text);margin-bottom:4px}
+.exp-org{font-size:13px;color:var(--accent);margin-bottom:3px;font-weight:500}
+.exp-date{font-size:11px;color:var(--dim);font-family:var(--mono);margin-bottom:.75rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.25rem}
+.etag{
+  font-size:10px;font-family:var(--mono);padding:3px 10px;border-radius:2px;
+  background:rgba(91,141,239,.08);color:var(--accent);border:1px solid rgba(91,141,239,.2);
+}
+.bullets{display:flex;flex-direction:column;gap:.7rem}
+.bul{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.7}
+.bul-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:8px}
+.award-badge{
+  display:inline-flex;align-items:center;gap:6px;margin-top:1rem;
+  background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);
+  color:var(--amber);font-size:10px;font-family:var(--mono);
+  padding:.35rem .85rem;border-radius:2px;
+}
+
+/* ─────────────── SKILLS ─────────────── */
+#skills{background:var(--bg2)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem}
+.sk-box{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);
+  padding:1.25rem;transition:border-color .2s;
+}
+.sk-box:hover{border-color:var(--dim)}
+.sk-label{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.85rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.pill{
+  font-size:11px;padding:.3rem .7rem;border-radius:3px;
+  background:var(--bg3);border:1px solid var(--border);color:var(--muted);
+  transition:border-color .2s,color .2s;cursor:default;
+}
+.pill:hover{border-color:var(--teal);color:var(--teal)}
+
+/* ─────────────── CERTS ─────────────── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.85rem}
+.cert{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);
+  padding:1.1rem 1.25rem;display:flex;gap:12px;align-items:center;
+  transition:border-color .2s,transform .2s;
+}
+.cert:hover{border-color:rgba(91,141,239,.4);transform:translateY(-2px)}
+.cert-ico{
+  width:38px;height:38px;border-radius:var(--r);flex-shrink:0;
+  background:rgba(91,141,239,.1);display:flex;align-items:center;justify-content:center;
+}
+.cert-ico svg{width:18px;height:18px;fill:var(--accent)}
+.cert-ico.gold{background:rgba(245,158,11,.1)}
+.cert-ico.gold svg{fill:var(--amber)}
+.cert-name{font-size:12px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:2px}
+.cert-by{font-size:10px;color:var(--dim);font-family:var(--mono)}
+
+/* ─────────────── CONTACT ─────────────── */
+#contact{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);align-items:start}
+.contact-sub{font-size:clamp(.88rem,1.5vw,.98rem);color:var(--muted);line-height:1.8;max-width:44ch}
+.clinks{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.clink{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:1rem 1.1rem;text-decoration:none;transition:border-color .2s,background .2s;display:block;
+}
+.clink:hover{border-color:var(--accent);background:rgba(91,141,239,.04)}
+.clink-type{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.clink-val{font-size:12px;color:var(--accent);font-weight:500;word-break:break-all}
+
+/* ─────────────── FOOTER ─────────────── */
+footer{
+  border-top:1px solid var(--border);padding:1.5rem clamp(1.25rem,5vw,3rem);
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;
+}
+footer p{font-family:var(--mono);font-size:10px;color:var(--dim)}
+
+/* ─────────────── ANIMATIONS ─────────────── */
+.fade{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+.fade.in{opacity:1;transform:none}
+
+/* ─────────────── RESPONSIVE ─────────────── */
+
+/* Tablet */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .ham{display:flex}
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-avatar-wrap{display:none}
+  .hero-stats{justify-content:center}
+  .tag{margin:0 auto 1.5rem}
+  .hero-desc{margin:0 auto 2.5rem}
+  .btns{justify-content:center}
+  .about-grid{grid-template-columns:1fr}
+  .exp-wrap{grid-template-columns:1fr}
+  .tl-nav{
+    position:static;display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+    gap:.4rem;margin-bottom:1.5rem;
+  }
+  .tl-item{border-left:none;border-bottom:2px solid var(--border);padding:.5rem .75rem}
+  .tl-item.act{border-bottom-color:var(--accent)}
+  .contact-grid{grid-template-columns:1fr}
+  .clinks{grid-template-columns:1fr 1fr}
+}
+
+/* Mobile */
+@media(max-width:600px){
+  :root{--nav-h:58px}
+  h1.hero-name{font-size:clamp(2.6rem,11vw,4rem)}
+  .btns{flex-direction:column;align-items:center}
+  .btn{width:100%;max-width:280px;justify-content:center}
+  .hero-stats{gap:1.25rem}
+  .clinks{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+  .certs-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+  .tl-nav{grid-template-columns:1fr 1fr}
+}
+
+@media(max-width:360px){
+  h1.hero-name{font-size:2.4rem}
+  .tl-nav{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="brand">
+    <div class="av">SP</div>
+    <div class="brand-text">
+      <div class="name">Sanskar Pandit</div>
+      <div class="status"><span class="dot"></span>Open to faculty roles</div>
+    </div>
+  </a>
+  <ul class="nav-links" id="nl">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="ham" id="ham" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mob">
+  <a href="#about" onclick="closeMob()">About</a>
+  <a href="#experience" onclick="closeMob()">Experience</a>
+  <a href="#skills" onclick="closeMob()">Skills</a>
+  <a href="#certifications" onclick="closeMob()">Certifications</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="grid-bg"></div>
+  <div class="glow glow1"></div>
+  <div class="glow glow2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="tag"><span class="tag-dot"></span>Cybersecurity · Cloud · Academia</div>
+        <h1 class="hero-name">
+          <span class="fade">Hello,</span><br>
+          I'm <span class="grad">Sanskar</span><br>
+          <span class="fade">Pandit</span>
+        </h1>
+        <p class="hero-desc">
+          IAM specialist and multi-cloud engineer with 4+ years securing enterprise infrastructure for <strong>American Express</strong>. MCA graduate with published research in AI limitations. Aspiring educator — bridging deep industry practice with academic teaching and research in cybersecurity.
+        </p>
+        <div class="btns">
+          <a href="#contact" class="btn btn-fill">Get in touch</a>
+          <a href="#experience" class="btn btn-outline">View experience</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="n">4<em>+</em></div><div class="l">Years industry</div></div>
+          <div class="stat"><div class="n">3</div><div class="l">Cloud platforms</div></div>
+          <div class="stat"><div class="n">2<em>×</em></div><div class="l">Best performer</div></div>
+          <div class="stat"><div class="n">1</div><div class="l">Research paper</div></div>
+        </div>
+      </div>
+      <div class="hero-avatar-wrap">
+        <div class="avatar-ring">
+          <div class="avatar-inner">SP</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="eyebrow fade">About & research</div>
+    <h2 class="title fade">Practitioner turned<br>researcher & educator</h2>
+    <div class="about-grid">
+      <div>
+        <div class="about-text fade">
+          <p>I spent four years working at the sharp end of enterprise security — managing identity infrastructure for <strong>American Express</strong>, migrating cloud environments across <strong>GCP, Azure, and AWS</strong>, and resolving real-time IAM incidents under strict SLAs.</p>
+          <p>I hold an <strong>MCA from MRIIRS</strong> and a <strong>BCA from JIMS–GGSIPU</strong>, with academic focus on zero-trust architecture, IAM governance, and cloud-native security — the same problems I've encountered daily in production environments.</p>
+          <p>I have published research examining <strong>AI chatbot limitations</strong> in enterprise deployments, and I am actively seeking a faculty role where I can teach cybersecurity and cloud computing with genuine industry depth, and contribute research that solves problems practitioners actually face.</p>
+        </div>
+        <div class="pub-card fade">
+          <div class="pub-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg></div>
+          <div>
+            <div class="pub-label">Published · 2024</div>
+            <div class="pub-title">Understanding the Limitations of AI Chatbots in Enterprise Environments: A Critical Analysis</div>
+            <div class="pub-meta">Sanskar Pandit · MRIIRS · Cybersecurity & AI</div>
+          </div>
+        </div>
+      </div>
+      <div class="r-cards fade">
+        <div class="r-card">
+          <div class="r-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg></div>
+          <div><h3>Zero-trust architecture</h3><p>Continuous verification models, micro-segmentation, and identity-centric policy frameworks for cloud-native enterprise environments.</p></div>
+        </div>
+        <div class="r-card">
+          <div class="r-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+          <div><h3>IAM governance frameworks</h3><p>Identity lifecycle management, RBAC/ABAC policy design, and SailPoint-based provisioning governance in regulated industries.</p></div>
+        </div>
+        <div class="r-card">
+          <div class="r-icon"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div>
+          <div><h3>Cloud-native security posture</h3><p>Security automation, compliance enforcement, and threat detection across GCP, Azure, and AWS multi-cloud deployments.</p></div>
+        </div>
+        <div class="r-card">
+          <div class="r-icon"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg></div>
+          <div><h3>AI limitations in enterprise AI</h3><p>Critical analysis of contextual understanding, privacy compliance, and adaptive learning gaps in large-scale chatbot deployments.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="eyebrow fade">Career</div>
+    <h2 class="title fade">Professional experience</h2>
+    <div class="exp-wrap">
+      <div class="tl-nav" role="tablist" aria-label="Experience">
+        <div class="tl-item act" data-p="0" role="tab" tabindex="0">
+          <div class="tl-title">IAM Subject Matter Expert</div>
+          <div class="tl-org">FIS Global · AmEx</div>
+          <div class="tl-date">Apr 2024 – Nov 2025</div>
+        </div>
+        <div class="tl-item" data-p="1" role="tab" tabindex="0">
+          <div class="tl-title">Azure & GCP Engineer</div>
+          <div class="tl-org">Freelance</div>
+          <div class="tl-date">Mar 2023 – Mar 2024</div>
+        </div>
+        <div class="tl-item" data-p="2" role="tab" tabindex="0">
+          <div class="tl-title">Junior GCP Engineer</div>
+          <div class="tl-org">PHD Engineers</div>
+          <div class="tl-date">May 2021 – Apr 2022</div>
+        </div>
+      </div>
+      <div>
+        <div class="panel act" id="p0">
+          <div class="exp-role">Senior Associate — IAM Subject Matter Expert</div>
+          <div class="exp-org">FIS Global Business Solutions · Client: American Express</div>
+          <div class="exp-date">April 2024 – November 2025 · New Delhi, India</div>
+          <div class="tags">
+            <span class="etag">SailPoint IIQ</span><span class="etag">Active Directory</span>
+            <span class="etag">SSO</span><span class="etag">ServiceNow</span><span class="etag">Mainframe</span>
+          </div>
+          <div class="bullets">
+            <div class="bul"><div class="bul-dot"></div><span>Served as IAM SME for American Express, managing secure access for 10,000+ enterprise users across SailPoint IIQ, Active Directory, Mainframe, and SSO systems.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Managed full user access lifecycle — provisioning, de-provisioning, role assignments, and access troubleshooting — with zero SLA breaches using ServiceNow ITSM.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Delivered 24×7 Tier-2/3 technical support; diagnosed application, network, and remote access failures with detailed root cause analysis and audit-ready documentation.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Leveraged Microsoft Copilot and ChatGPT to streamline knowledge-base documentation and reduce mean time to resolution on complex IAM incidents.</span></div>
+          </div>
+          <div class="award-badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Best Employee Performer 2024 & 2025 — American Express / FIS Global
+          </div>
+        </div>
+        <div class="panel" id="p1">
+          <div class="exp-role">Freelance Azure & GCP Cloud Engineer</div>
+          <div class="exp-org">Independent Consulting</div>
+          <div class="exp-date">March 2023 – March 2024 · Remote</div>
+          <div class="tags">
+            <span class="etag">Microsoft Azure</span><span class="etag">GCP</span>
+            <span class="etag">Cloud Migration</span><span class="etag">RBAC</span><span class="etag">Security Architecture</span>
+          </div>
+          <div class="bullets">
+            <div class="bul"><div class="bul-dot"></div><span>Conducted cloud readiness assessments — analysed business requirements, performance benchmarks, and security posture for enterprise clients.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Designed and delivered Azure-to-GCP and GCP-to-AWS migration strategies with full timelines, cost projections, and risk mitigation plans.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Architected secure Azure infrastructures integrating Azure AD, RBAC, and NSG policies — reducing client security exposure while maintaining compliance requirements.</span></div>
+          </div>
+        </div>
+        <div class="panel" id="p2">
+          <div class="exp-role">Junior GCP Engineer</div>
+          <div class="exp-org">PHD Engineers</div>
+          <div class="exp-date">May 2021 – April 2022 · New Delhi, India</div>
+          <div class="tags">
+            <span class="etag">GCP</span><span class="etag">Terraform</span>
+            <span class="etag">GitOps</span><span class="etag">IaC</span><span class="etag">AWS</span>
+          </div>
+          <div class="bullets">
+            <div class="bul"><div class="bul-dot"></div><span>Led full Azure-to-GCP migration — infrastructure redesign, data migration, testing, and post-launch monitoring across hybrid environments.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Deployed automated cloud solutions using GCP Compute Engine, Cloud Storage, Cloud Functions, and Cloud IAM.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Imported legacy infrastructure to Terraform; implemented GitOps workflows for version-controlled IaC deployments and process automation.</span></div>
+            <div class="bul"><div class="bul-dot"></div><span>Executed GCP-to-AWS migration with minimal downtime; enforced IAM policies and maintained audit-ready compliance documentation.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="eyebrow fade">Capabilities</div>
+    <h2 class="title fade">Technical skills</h2>
+    <div class="skills-grid">
+      <div class="sk-box fade"><div class="sk-label">IAM & Identity</div><div class="pills"><span class="pill">SailPoint IIQ</span><span class="pill">Active Directory</span><span class="pill">Azure AD</span><span class="pill">SSO</span><span class="pill">Mainframe Security</span><span class="pill">RBAC</span><span class="pill">ABAC</span></div></div>
+      <div class="sk-box fade"><div class="sk-label">Cloud Platforms</div><div class="pills"><span class="pill">Google Cloud (GCP)</span><span class="pill">Microsoft Azure</span><span class="pill">AWS</span></div></div>
+      <div class="sk-box fade"><div class="sk-label">Security Ops</div><div class="pills"><span class="pill">Incident Analysis</span><span class="pill">Audit & Compliance</span><span class="pill">Log Monitoring</span><span class="pill">Risk Assessment</span><span class="pill">Anomaly Detection</span></div></div>
+      <div class="sk-box fade"><div class="sk-label">DevOps & IaC</div><div class="pills"><span class="pill">Terraform</span><span class="pill">GitOps</span><span class="pill">CI/CD</span><span class="pill">GitHub</span><span class="pill">Bash Scripting</span></div></div>
+      <div class="sk-box fade"><div class="sk-label">ITSM & Tools</div><div class="pills"><span class="pill">ServiceNow</span><span class="pill">SLA Tracking</span><span class="pill">Checkpoint Firewalls</span><span class="pill">VPN</span></div></div>
+      <div class="sk-box fade"><div class="sk-label">Languages</div><div class="pills"><span class="pill">Python</span><span class="pill">Bash</span><span class="pill">Linux</span><span class="pill">Windows Server</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="eyebrow fade">Credentials</div>
+    <h2 class="title fade">Certifications & awards</h2>
+    <div class="certs-grid">
+      <div class="cert fade"><div class="cert-ico gold"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="cert-name">Best Employee Performer 2024 & 2025</div><div class="cert-by">American Express · FIS Global</div></div></div>
+      <div class="cert fade"><div class="cert-ico"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg></div><div><div class="cert-name">Junior Cybersecurity Analyst</div><div class="cert-by">Cisco Skills For All Academy</div></div></div>
+      <div class="cert fade"><div class="cert-ico"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V5l-9-4z"/></svg></div><div><div class="cert-name">Threat Management Training</div><div class="cert-by">Cisco Networking Academy</div></div></div>
+      <div class="cert fade"><div class="cert-ico"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div><div><div class="cert-name">Microsoft Azure Fundamentals</div><div class="cert-by">Microsoft · AZ-900</div></div></div>
+      <div class="cert fade"><div class="cert-ico"><svg viewBox="0 0 24 24"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg></div><div><div class="cert-name">Google Cloud Platform Fundamentals</div><div class="cert-by">Google</div></div></div>
+      <div class="cert fade"><div class="cert-ico gold"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div><div class="cert-name">Android Project Nirbhaya — 3rd Place</div><div class="cert-by">Intercollege Competition</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <div class="eyebrow fade">Connect</div>
+        <h2 class="title fade" style="margin-bottom:1rem">Let's build something<br>meaningful</h2>
+        <p class="contact-sub fade">Open to assistant professor roles, research collaborations, paper co-authorship, and cybersecurity consulting. Based in New Delhi, India — available for hybrid or remote positions.</p>
+      </div>
+      <div class="clinks fade">
+        <a href="mailto:sanskar.pandit.official@gmail.com" class="clink"><div class="clink-type">Email</div><div class="clink-val">sanskar.pandit.official@gmail.com</div></a>
+        <a href="tel:+919625337358" class="clink"><div class="clink-type">Phone</div><div class="clink-val">+91-9625337358</div></a>
+        <a href="https://www.linkedin.com/in/sanskar-pandit/" target="_blank" class="clink"><div class="clink-type">LinkedIn</div><div class="clink-val">linkedin.com/in/sanskar-pandit</div></a>
+        <a href="#" class="clink"><div class="clink-type">Education</div><div class="clink-val">MCA · MRIIRS, 2024–2026</div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Sanskar Pandit</p>
+  <p>Cybersecurity · Cloud · Academia</p>
+</footer>
+
+<script>
+/* progress bar */
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  document.getElementById('bar').style.width=Math.min(100,(d.scrollTop/(d.scrollHeight-d.clientHeight))*100)+'%';
+});
+
+/* hamburger */
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
+ham.addEventListener('click',()=>{ham.classList.toggle('open');mob.classList.toggle('open')});
+function closeMob(){ham.classList.remove('open');mob.classList.remove('open')}
+
+/* experience tabs */
+document.querySelectorAll('.tl-item').forEach((el,i)=>{
+  const activate=(idx)=>{
+    document.querySelectorAll('.tl-item').forEach(n=>n.classList.remove('act'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('act'));
+    document.querySelectorAll('.tl-item')[idx].classList.add('act');
+    const panel=document.getElementById('p'+idx);
+    if(panel)panel.classList.add('act');
+  };
+  el.addEventListener('click',()=>activate(i));
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate(i)}});
+});
+
+/* nav active link on scroll */
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id)});
+    }
+  });
+},{rootMargin:'-40% 0px -40% 0px'});
+sections.forEach(s=>io.observe(s));
+
+/* fade-in on scroll */
+const fo=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');fo.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.fade').forEach(el=>fo.observe(el));
+</script>
+</body>
+</html>
